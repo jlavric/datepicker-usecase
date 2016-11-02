@@ -1,5 +1,5 @@
 ## ng2-datetime picker
-author: [link](https://nkalinov.github.io/ng2-datetime/)
+Project based on: [link](https://nkalinov.github.io/ng2-datetime/)
 
 ## Setup
 
