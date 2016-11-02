@@ -11,12 +11,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var AppComponent = (function () {
     function AppComponent() {
+        this.date2 = new Date(2016, 5, 10);
+        this.datepickerOpts = {
+            startDate: new Date(2016, 5, 10),
+            autoclose: true,
+            todayBtn: 'linked',
+            todayHighlight: true,
+            assumeNearbyYear: true,
+            format: 'd MM yyyy',
+            icon: 'fa fa-calendar-o',
+            datetime: false
+        };
+        this.date5 = new Date();
+        this.datepickerToOpts = {};
     }
+    AppComponent.prototype.handleDateFromChange = function (dateFrom) {
+        // update the model
+        this.dateFrom = dateFrom;
+        // do not mutate the object or angular won't detect the changes
+        this.datepickerToOpts = {
+            startDate: dateFrom
+        };
+    };
+    AppComponent.prototype.getDate = function (dt) {
+        return dt && dt.getTime();
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'my-app',
-            template: '<datepicker-example></datepicker-example>'
+            template: "\n       <div  class=\"panel-body\">\n        <datetime [(ngModel)]=\"date\" [timepicker]=\"false\" [datepicker]=\"datepickerOpts\"></datetime>\n       <div> \n       <datepicker-example></datepicker-example>\n    "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

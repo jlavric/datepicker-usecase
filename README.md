@@ -61,3 +61,5 @@ import { ExampleComponent } from './shared/ng2-datetime/example.component';
 ```
 ExampleComponent is shown where ```<datepicker-example>``` selector is used. 
     
+## Known issues
+Do not use **margin** on ```body```. It breaks left and top position of popup.
