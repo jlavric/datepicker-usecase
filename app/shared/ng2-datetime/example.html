@@ -1,0 +1,180 @@
+<main class="container">
+    <div class="page-header">
+        <h1>ng2-datetime
+            <small><img src="https://badge.fury.io/js/ng2-datetime.svg"/></small>
+        </h1>
+    </div>
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Default behaviour (plugins default options)
+            </h3>
+        </div>
+        <div class="panel-body">
+            <pre><code>&lt;datetime [(ngModel)]="date">&lt;/datetime></code></pre>
+            <datetime [(ngModel)]="date"></datetime>
+            <h5><strong>ngModel:</strong> {{getDate(date) | date: "medium"}}</h5>
+        </div>
+    </section>
+    <div class="row">
+        <div class="col-md-6">
+            <section class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Disable datepicker
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <pre><code>&lt;datetime [datepicker]="false" [(ngModel)]="date3">&lt;/datetime></code></pre>
+                    <datetime [datepicker]="false" [(ngModel)]="date3"></datetime>
+                    <h5><strong>ngModel:</strong> {{getDate(date3) | date: "medium"}}</h5>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-6">
+            <section class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Disable timepicker
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <pre><code>&lt;datetime [timepicker]="false" [(ngModel)]="date3">&lt;/datetime></code></pre>
+                    <datetime [timepicker]="false" [(ngModel)]="date3"></datetime>
+                    <h5><strong>ngModel:</strong> {{getDate(date3) | date: "medium"}}</h5>
+                </div>
+            </section>
+        </div>
+    </div>
+    <h2>Options</h2>
+    <section>
+        <div class="row">
+            <div class="col-md-4">
+                <h4>
+                    Component options:
+                </h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Option (default)</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><strong>hasClearButton</strong> (false)</td>
+                        <td>clear button</td>
+                    </tr>
+                    <tr>
+                        <td><strong>readonly</strong> (false)</td>
+                        <td>adds the readonly property to the datepicker input and sets the
+                            <a href="http://bootstrap-datepicker.readthedocs.io/en/latest/options.html#enableonreadonly"
+                               target="_blank">
+                                enableOnReadonly option
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h4>
+                    Datepicker
+                    <a href="http://bootstrap-datepicker.readthedocs.org/en/latest/options.html" target="_blank">
+                        all plugin options <i class="fa fa-external-link"></i>
+                    </a> + above:
+                </h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Option (default)</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><strong>icon</strong> (glyphicon glyphicon-th)</td>
+                        <td>datepicker button icon</td>
+                    </tr>
+                    <tr>
+                        <td><strong>placeholder</strong></td>
+                        <td>datepicker input placeholder ('Choose date')</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h4>
+                    Timepicker
+                    <a href="http://jdewit.github.io/bootstrap-timepicker/" target="_blank">
+                        all plugin options <i class="fa fa-external-link"></i>
+                    </a> + above:
+                </h4>
+                <table class="table table-condensed">
+                    <tr>
+                        <th>Option (default)</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><strong>icon</strong> (glyphicon glyphicon-time)</td>
+                        <td>timepicker button icon</td>
+                    </tr>
+                    <tr>
+                        <td><strong>placeholder ('Set time')</strong></td>
+                        <td>timepicker input placeholder</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+    <section class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Setting options</h3></div>
+        <div class="panel-body">
+            <pre><code>&lt;datetime [timepicker]="&#123; showMeridian: false, minuteStep: 1 &#125;" [datepicker]="datepickerOpts" [(ngModel)]="date2">&lt;/datetime></code></pre>
+            In your component:<br>
+            <pre><code>date2: Date = new Date(2016, 5, 10);
+datepickerOpts = &#123;
+    startDate: new Date(2016, 5, 10),
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true,
+    assumeNearbyYear: true,
+    format: 'D, d MM yyyy'
+&#125;</code></pre>
+            <datetime [(ngModel)]="date2"
+                      [timepicker]="{showMeridian: false, minuteStep: 1}"
+                      [datepicker]="datepickerOpts"></datetime>
+            <h5><strong>ngModel:</strong> {{getDate(date2) | date: "medium"}}</h5>
+        </div>
+    </section>
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Buttons icons (FontAwesome)
+            </h3>
+        </div>
+        <div class="panel-body">
+            <pre><code>&lt;datetime [(ngModel)]="date4" [timepicker]="&#123; icon: 'fa fa-clock-o' &#125;" [datepicker]="&#123; icon: 'fa fa-calendar' &#125;">&lt;/datetime></code></pre>
+            <datetime [(ngModel)]="date4" [timepicker]="{icon: 'fa fa-clock-o'}"
+                      [datepicker]="{icon: 'fa fa-calendar'}"></datetime>
+            <h5><strong>ngModel:</strong> {{getDate(date4) | date: "medium"}}</h5>
+        </div>
+    </section>
+    <h2>Examples</h2>
+    <section class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">From-To (WIP)</h3></div>
+        <div class="panel-body">
+            <pre><code>&lt;datetime [ngModel]="dateFrom" (ngModelChange)="handleDateFromChange($event)" [timepicker]="false">&lt;/datetime></code></pre>
+            <pre><code>&lt;datetime [(ngModel)]="dateTo" [timepicker]="false" [datepicker]="datepickerToOpts">&lt;/datetime></code></pre>
+            <datetime [ngModel]="dateFrom"
+                      style="float: left"
+                      (ngModelChange)="handleDateFromChange($event)"
+                      [timepicker]="false"></datetime>
+            <datetime [(ngModel)]="dateTo"
+                      [timepicker]="false"
+                      [datepicker]="datepickerToOpts"></datetime>
+            <h5><strong>dateFrom:</strong> {{getDate(dateFrom) | date: "medium"}}</h5>
+            <h5><strong>dateTo:</strong> {{getDate(dateTo) | date: "medium"}}</h5>
+        </div>
+    </section>
+    <section class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">Clear button</h3></div>
+        <div class="panel-body">
+            <pre><code>&lt;datetime [(ngModel)]="date5" [hasClearButton]="true">&lt;/datetime></code></pre>
+            <datetime [(ngModel)]="date5" [hasClearButton]="true"></datetime>
+            <h5><strong>ngModel:</strong> {{getDate(date5) | date: "medium"}}</h5>
+        </div>
+    </section>
+</main>
