@@ -1,6 +1,10 @@
 ## ng2-datetime picker
 Project based on: [link](https://nkalinov.github.io/ng2-datetime/)
 
+Component ng2-datetime is changed in a way that can be used in **model driven** forms.
+**Template driven** forms example is hidden in ```example.ts```:)
+
+
 ## Setup
 
 Put following into **index.html**. You can tweak it to suit your needs.
