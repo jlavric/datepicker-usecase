@@ -1,51 +1,59 @@
 import {
     Component, Output, Input, EventEmitter, HostListener, AfterViewInit, OnDestroy,
-    SimpleChanges, OnChanges
+    SimpleChanges, OnChanges, forwardRef
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TimepickerEvent } from './timepicker-event-interface';
 
 @Component({
     selector: 'datetime',
     template: `
     <div class="form-inline">
+        
         <div id="{{idDatePicker}}" class="input-group date">
-            <input type="text" class="form-control"
-                   [attr.readonly]="readonly"
-                   [attr.placeholder]="datepickerOptions.placeholder || 'Choose date'"
-                   [(ngModel)]="dateModel"
-                   (keyup)="checkEmptyValue($event)"/>
+            <input 
+                type="text" 
+                class="form-control"
+                value={{dateModel}}
+                placeholder="{{datepickerOptions.placeholder}}"
+                (keyup)="checkEmptyValue($event)"/>
             <div class="input-group-addon">
-                <span [ngClass]="datepickerOptions.icon || 'glyphicon glyphicon-th'"></span>
+                <span *ngIf="datepickerOptions.icon" class="{{datepickerOptions.icon}}"></span>
+                <span *ngIf="!datepickerOptions.icon" class="glyphicon glyphicon-th"></span>
             </div>
         </div>
+        
         <div class="input-group bootstrap-timepicker timepicker">
-            <input id="{{idTimePicker}}" type="text" class="form-control input-small" 
-                   [attr.readonly]="readonly"
-                   [attr.placeholder]="timepickerOptions.placeholder || 'Set time'"
-                   [(ngModel)]="timeModel"
-                   (keyup)="checkEmptyValue($event)">
-            <span class="input-group-addon"><i [ngClass]="timepickerOptions.icon || 'glyphicon glyphicon-time'"></i></span>
+            <input 
+                id="{{idTimePicker}}" 
+                type="text" 
+                class="form-control input-small" 
+                (keyup)="checkEmptyValue($event)">
+            <span class="input-group-addon">
+                <i *ngIf="timepickerOptions.icon" class="{{timepickerOptions.icon}} || 'glyphicon glyphicon-time'"></i>
+                <i *ngIf="!timepickerOptions.icon" class="glyphicon glyphicon-time"></i>
+            </span>
         </div>
         <button *ngIf="hasClearButton" type="button" (click)="onClearClick()">Clear</button>
     </div>
-   `
+   `,
+    providers: [{
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => NKDatetime),
+        multi: true
+    }]
 })
 export class NKDatetime implements ControlValueAccessor, AfterViewInit, OnDestroy, OnChanges {
     @Output()
     dateChange: EventEmitter<Date> = new EventEmitter<Date>();
 
-    @Input('timepicker')
-    timepickerOptions: any = {};
+    @Input('timepicker') timepickerOptions: any = {};
 
-    @Input('datepicker')
-    datepickerOptions: any = {};
+    @Input('datepicker') datepickerOptions: any = {};
 
-    @Input('hasClearButton')
-    hasClearButton: boolean = false;
+    @Input('hasClearButton') hasClearButton: boolean = false;
 
-    @Input()
-    readonly: boolean = null;
+    @Input() readonly: boolean = null;
 
     date: Date; // ngModel
     dateModel: string;
@@ -64,9 +72,9 @@ export class NKDatetime implements ControlValueAccessor, AfterViewInit, OnDestro
     onTouched = () => {
     };
 
-    constructor(ngControl: NgControl) {
-        ngControl.valueAccessor = this; // override valueAccessor
-    }
+    // constructor() {
+    //ngControl.valueAccessor = this; // override valueAccessor
+    // }
 
     ngAfterViewInit() {
         this.init();
@@ -126,10 +134,10 @@ export class NKDatetime implements ControlValueAccessor, AfterViewInit, OnDestro
     checkEmptyValue(e: any) {
         const value = e.target.value;
         if (value === '' && (
-                this.timepickerOptions === false ||
-                this.datepickerOptions === false ||
-                (this.timeModel === '' && this.dateModel === '')
-            )) {
+            this.timepickerOptions === false ||
+            this.datepickerOptions === false ||
+            (this.timeModel === '' && this.dateModel === '')
+        )) {
             this.dateChange.emit(null);
         }
     }

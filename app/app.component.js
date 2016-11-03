@@ -9,8 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var forms_1 = require('@angular/forms');
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(_fp) {
+        this._fp = _fp;
         this.date2 = new Date(2016, 5, 10);
         this.datepickerOpts = {
             startDate: new Date(2016, 5, 10),
@@ -36,13 +38,17 @@ var AppComponent = (function () {
     AppComponent.prototype.getDate = function (dt) {
         return dt && dt.getTime();
     };
+    AppComponent.prototype.ngOnInit = function () {
+        this.form = this._fp.group({
+            date: new Date()
+        });
+    };
     AppComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'my-app',
-            template: "\n       <div  class=\"panel-body\">\n        <datetime [(ngModel)]=\"date\" [timepicker]=\"false\" [datepicker]=\"datepickerOpts\"></datetime>\n       <div> \n       <datepicker-example></datepicker-example>\n    "
-        }), 
-        __metadata('design:paramtypes', [])
+            template: "\n       <form class=\"panel-body\" [formGroup]=\"form\">\n        <datetime formControlName=\"date\" [timepicker]=\"false\" [datepicker]=\"datepickerOpts\"></datetime>\n       <form> \n       <datepicker-example></datepicker-example>" }), 
+        __metadata('design:paramtypes', [forms_1.FormBuilder])
     ], AppComponent);
     return AppComponent;
 }());

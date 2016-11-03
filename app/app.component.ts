@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
     moduleId: module.id,
     selector: 'my-app',
     template: `
-       <div  class="panel-body">
-        <datetime [(ngModel)]="date" [timepicker]="false" [datepicker]="datepickerOpts"></datetime>
-       <div> 
-       <datepicker-example></datepicker-example>
-    `
-})
-export class AppComponent {
+       <form class="panel-body" [formGroup]="form">
+        <datetime formControlName="date" [timepicker]="false" [datepicker]="datepickerOpts"></datetime>
+       <form> 
+       <datepicker-example></datepicker-example>`})
+       
+export class AppComponent implements OnInit {
+    form: FormGroup;
     date: Date;
     date2: Date = new Date(2016, 5, 10);
     date3: Date;
@@ -43,5 +44,13 @@ export class AppComponent {
 
     getDate(dt): number {
         return dt && dt.getTime();
+    }
+
+    constructor(private _fp: FormBuilder){}
+
+    ngOnInit() {
+        this.form = this._fp.group({
+            date: new Date()
+        });
     }
 }
